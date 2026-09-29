@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gary Sangha Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0F;
+    --surface:#111118;
+    --card:#16161F;
+    --border:#22222E;
+    --border-glow:#2E2E45;
+    --accent:#4ECDC4;
+    --text:#FFFFFF;
+    --muted:#C8C8D8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Outfit',sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Playfair Display',serif;font-weight:600;}
+  a{color:inherit;text-decoration:none;}
+  .noise{
+    position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .container{max-width:1200px;margin:0 auto;padding:0 40px;}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,10,15,.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;max-width:1200px;margin:0 auto;}
+  .nav-brand{display:flex;align-items:center;gap:18px;}
+  .tt-logo-link{display:flex;align-items:center;padding-right:18px;border-right:1px solid var(--border-glow);}
+  .tt-logo{height:38px;width:auto;display:block;opacity:1;transition:opacity .2s;}
+  .tt-logo-link:hover .tt-logo{opacity:.85;}
+  .nav-name{font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:.5px;}
+  .nav-links{display:flex;gap:36px;font-size:.85rem;letter-spacing:.5px;text-transform:uppercase;}
+  .nav-links a{opacity:.75;transition:opacity .2s, color .2s;}
+  .nav-links a:hover, .nav-links a.active{opacity:1;color:var(--accent);}
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;z-index:200;}
+  .nav-hamburger span{width:24px;height:2px;background:var(--text);display:block;}
+  .mobile-drawer{
+    position:fixed;inset:0;background:#0A0A0Ff2;backdrop-filter:blur(14px);
+    z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
+    transform:translateY(-100%);transition:transform .35s ease;
+  }
+  .mobile-drawer.open{transform:translateY(0);}
+  .mobile-drawer a{font-size:1.4rem;font-family:'Playfair Display',serif;}
+  .drawer-close{position:absolute;top:26px;right:30px;font-size:1.8rem;background:none;border:none;color:var(--text);cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:140px 40px 80px;max-width:1200px;margin:0 auto;position:relative;z-index:2;
+  }
+  .hero-eyebrow{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;}
+  .hero-eyebrow span:not(:last-child)::after{content:"·";color:var(--muted);margin-left:14px;}
+  .hero h1{font-size:3.2rem;line-height:1.15;max-width:840px;margin-bottom:26px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero-summary{font-size:1.15rem;line-height:1.7;color:var(--muted);max-width:660px;margin-bottom:40px;font-weight:300;}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px;}
+  .tag{
+    padding:8px 16px;border:1px solid var(--border-glow);border-radius:100px;
+    font-size:.82rem;color:var(--muted);background:var(--surface);
+  }
+  .tag.highlight{border-color:var(--accent);color:var(--accent);}
+  .cta-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:20px;}
+  .cta-secondary{font-size:.9rem;color:var(--muted);border-bottom:1px solid var(--border-glow);padding-bottom:2px;}
+  .scroll-hint{position:absolute;bottom:20px;left:40px;font-size:.75rem;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
+
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-glow),transparent);margin:0 auto;max-width:1200px;}
+
+  section{padding:110px 0;position:relative;z-index:2;}
+  .why-section-tight{padding-bottom:40px;}
+  .stats-section{padding:70px 0;}
+  .section-label{font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .section-title{font-size:2.1rem;max-width:680px;margin-bottom:20px;}
+  .section-sub{color:var(--muted);max-width:640px;line-height:1.7;margin-bottom:60px;}
+
+  /* METRICS STRIP */
+  .metrics-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
+  .metric-cell{
+    background:var(--card);border:1px solid var(--border);border-radius:14px;padding:30px 20px;text-align:center;
+    transition:border-color .25s, transform .25s;
+  }
+  .metric-cell:hover{border-color:var(--border-glow);transform:translateY(-4px);}
+  .metric-cell .metric-num{font-family:'Playfair Display',serif;font-size:2.1rem;color:var(--accent);display:block;margin-bottom:8px;}
+  .metric-cell .metric-label{font-size:.82rem;color:var(--muted);line-height:1.5;}
+
+  /* SKILLS GRID (why pillars) */
+  .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .skill-cell{
+    background:var(--card);border:1px solid var(--border);border-radius:14px;padding:30px 24px;
+    transition:border-color .25s, transform .25s;
+  }
+  .skill-cell:hover{border-color:var(--border-glow);transform:translateY(-4px);}
+  .skill-icon{font-size:1.8rem;margin-bottom:16px;display:block;}
+  .skill-cell h3{font-family:'Outfit',sans-serif;font-weight:600;font-size:1.02rem;margin-bottom:10px;color:var(--text);}
+  .skill-cell p{font-size:.87rem;color:var(--muted);line-height:1.6;}
+
+  /* WHY / APPROACH */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .why-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:34px;}
+  .why-card .num{color:var(--accent);font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:14px;display:block;}
+  .why-card h3{font-size:1.1rem;margin-bottom:12px;color:var(--text);}
+  .why-card p{color:var(--muted);font-size:.92rem;line-height:1.7;}
+
+  /* APPROACH LIST (5 stages, single column stacked) */
+  .approach-list{display:flex;flex-direction:column;gap:18px;}
+  .approach-item{
+    background:var(--surface);border:1px solid var(--border);border-radius:14px;
+    padding:28px 32px;display:flex;gap:24px;align-items:flex-start;
+  }
+  .approach-item .num{font-family:'Playfair Display',serif;color:var(--accent);font-size:1.5rem;min-width:40px;}
+  .approach-item h3{font-size:1.05rem;margin-bottom:8px;color:var(--text);}
+  .approach-item p{font-size:.9rem;color:var(--muted);line-height:1.65;}
+
+  /* CASE STUDIES */
+  .tool-case{
+    background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:36px;
+  }
+  .tool-header{padding:34px 40px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:18px;}
+  .tool-header-left{display:flex;gap:20px;align-items:center;}
+  .tool-num{font-family:'Playfair Display',serif;color:var(--accent);font-size:1.6rem;}
+  .tool-header h3{font-size:1.4rem;color:var(--text);margin-bottom:6px;}
+  .tool-header .tagline{color:var(--muted);font-size:.92rem;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;}
+  .badge{padding:6px 14px;border:1px solid var(--border-glow);border-radius:100px;font-size:.75rem;color:var(--accent);}
+  .tool-body{padding:30px 40px;}
+  .col-list{list-style:none;}
+  .col-list li{font-size:.92rem;color:var(--muted);line-height:1.7;margin-bottom:12px;padding-left:20px;position:relative;}
+  .col-list li::before{content:"→";position:absolute;left:0;color:var(--accent);}
+  .relevance-note{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-size:.85rem;color:var(--muted);font-style:normal;}
+  .relevance-note strong{color:var(--accent);font-weight:500;}
+
+  /* LOGO TICKER */
+  .logo-ticker-section{padding:70px 0;}
+  .logo-ticker-section .section-label{margin-bottom:36px;}
+  .ticker-wrap{
+    width:100%;overflow:hidden;position:relative;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  }
+  .ticker-track{
+    display:flex;align-items:center;gap:64px;width:max-content;
+    animation:tickerScroll 40s linear infinite;
+  }
+  .ticker-wrap:hover .ticker-track{animation-play-state:paused;}
+  .ticker-item{
+    display:flex;align-items:center;justify-content:center;
+    height:56px;min-width:120px;opacity:1;
+  }
+  .ticker-item img{max-height:40px;max-width:150px;object-fit:contain;}
+  .ticker-item.logo-card{
+    background:#fff;border-radius:8px;padding:8px 14px;height:auto;
+    min-width:0;width:fit-content;
+    opacity:1;
+  }
+  .ticker-item.logo-card img{max-height:44px;max-width:140px;}
+  .ticker-fallback{
+    display:none;font-family:'Playfair Display',serif;font-size:1.15rem;
+    color:var(--muted);white-space:nowrap;letter-spacing:.5px;
+  }
+  @keyframes tickerScroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+
+  /* CAPABILITY STRIP */
+  .capability-strip{display:flex;flex-wrap:wrap;gap:12px;}
+  .capability-pill{
+    padding:12px 22px;border:1px solid var(--border-glow);border-radius:100px;
+    font-size:.85rem;color:var(--muted);background:var(--card);
+    transition:border-color .25s, color .25s;
+  }
+  .capability-pill:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* FOOTER */
+  footer{padding:60px 0;border-top:1px solid var(--border);text-align:center;}
+  footer .f-name{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:14px;}
+  footer .f-links{display:flex;justify-content:center;gap:24px;font-size:.85rem;color:var(--muted);margin-bottom:16px;}
+  footer .f-links a:hover{color:var(--accent);}
+  footer .copyright{font-size:.78rem;color:#5a5a68;}
+  .footer-tt-link{color:#5a5a68;text-decoration:underline;text-underline-offset:2px;transition:color .2s;}
+  .footer-tt-link:hover{color:var(--accent);}
+
+  .back-to-top{
+    position:fixed;bottom:30px;right:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#0A0A0F;display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;border:none;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s, transform .3s;
+    z-index:90;
+  }
+  .back-to-top.show{opacity:1;pointer-events:auto;}
+  .back-to-top:hover{transform:translateY(-3px);}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  @media (max-width:1024px){
+    .metrics-grid{grid-template-columns:repeat(3,1fr);}
+    .skills-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:768px){
+    .container{padding:0 24px;}
+    .nav-links{display:none;}
+    .nav-hamburger{display:flex;}
+    .nav-name{font-size:.9rem;}
+    .tt-logo{height:28px;}
+    .tt-logo-link{padding-right:12px;}
+    .nav-brand{gap:12px;}
+    .hero{padding:120px 24px 60px;}
+    .hero h1{font-size:2.2rem;}
+    .why-grid{grid-template-columns:1fr;}
+    .metrics-grid{grid-template-columns:repeat(2,1fr);}
+    .skills-grid{grid-template-columns:1fr;}
+    section{padding:70px 0;}
+    .tool-header{padding:26px 24px;}
+    .tool-body{padding:24px;}
+    .approach-item{padding:22px 20px;flex-direction:column;gap:10px;}
+  }
+  @media (max-width:380px){
+    .hero h1{font-size:1.85rem;}
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="https://www.transformtogether.co.uk/" target="_blank" rel="noopener" class="tt-logo-link">
+        <img src="LOGO_TT.png" alt="Transform Together" class="tt-logo">
+      </a>
+      <a href="https://www.linkedin.com/in/garysangha/" target="_blank" rel="noopener" class="nav-name">Gary Sangha</a>
+    </div>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#approach">Approach</a>
+      <a href="#why">Why Gary</a>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-drawer" id="mobileDrawer">
+  <button class="drawer-close" id="drawerClose">✕</button>
+  <a href="#experience">Experience</a>
+  <a href="#approach">Approach</a>
+  <a href="#why">Why Gary</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <span>IT Delivery Lead</span>
+    <span>Technology Transformation &amp; Programme Director</span>
+    <span>Financial Services &amp; Complex Migration</span>
+  </div>
+  <h1>Senior technology transformation leadership for complex, multi-vendor delivery.</h1>
+  <p class="hero-summary">Gary is a senior technology transformation leader with 25+ years directing complex, multi-vendor programmes across Financial Services and global enterprises, with authority over single programmes worth up to £300m and £1bn+ in aggregate portfolio experience. Proven in taking control of high-risk delivery environments, recovering challenged programmes and driving large-scale technology migration through to successful execution.</p>
+  <div class="hero-tags">
+    <span class="tag highlight">Programme Turnaround &amp; Recovery</span>
+    <span class="tag highlight">Multi-Vendor Delivery Leadership</span>
+    <span class="tag highlight">Technology Migration &amp; Transition</span>
+    <span class="tag highlight">Executive Stakeholder Management</span>
+    <span class="tag">Financial Services Transformation</span>
+    <span class="tag">Governance &amp; Programme Control</span>
+    <span class="tag">Cutover &amp; Service Transition</span>
+  </div>
+  <div class="cta-row">
+    <a href="https://www.linkedin.com/in/garysangha/" target="_blank" rel="noopener" class="cta-secondary">View LinkedIn Profile</a>
+  </div>
+  <div class="scroll-hint">Scroll ↓</div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- METRICS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="metric-cell reveal"><span class="metric-num">£300m</span><span class="metric-label">Single-programme authority</span></div>
+      <div class="metric-cell reveal"><span class="metric-num">£1bn+</span><span class="metric-label">Aggregate portfolio experience</span></div>
+      <div class="metric-cell reveal"><span class="metric-num">30,000</span><span class="metric-label">Users impacted, single programme</span></div>
+      <div class="metric-cell reveal"><span class="metric-num">88</span><span class="metric-label">Countries, single programme</span></div>
+      <div class="metric-cell reveal"><span class="metric-num">400</span><span class="metric-label">Applications transitioned</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- WHY GARY FOR SSIS -->
+<section id="why-ssis">
+  <div class="container">
+    <div class="section-label reveal">Why Gary for SSIS</div>
+    <h2 class="section-title reveal">Executive delivery leadership for a complex, multi-vendor migration</h2>
+    <p class="section-sub reveal">Four capabilities drawn directly from Gary's track record, each directly transferable to a complex, multi-vendor technology migration operating through an evolving architecture and transition state.</p>
+    <div class="skills-grid">
+      <div class="skill-cell reveal"><span class="skill-icon">🎯</span><h3>Delivery Control</h3><p>Establishes integrated governance, accountability and delivery control across complex programmes, from a standing start.</p></div>
+      <div class="skill-cell reveal"><span class="skill-icon">🧩</span><h3>Multi-Vendor Leadership</h3><p>Experienced coordinating major suppliers, internal technology teams and complex cross-vendor dependencies.</p></div>
+      <div class="skill-cell reveal"><span class="skill-icon">🔄</span><h3>Migration &amp; Transformation</h3><p>Strong track record across large technology migrations, transitions and transformation programmes at scale.</p></div>
+      <div class="skill-cell reveal"><span class="skill-icon">🤝</span><h3>Executive Confidence</h3><p>Able to absorb programme complexity, challenge delivery positions and give senior sponsors clear decisions, not operational noise.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- RELEVANT EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label reveal">Track Record</div>
+    <h2 class="section-title reveal">Directing and recovering complex, multi-vendor technology programmes</h2>
+    <p class="section-sub reveal">Three engagements chosen for their direct relevance to a delivery lead mandate on SSIS: entering a challenged environment and establishing control, mobilising a large multi-country programme at speed, and leading complex application and supplier transition at scale.</p>
+
+    <div class="tool-case reveal">
+      <div class="tool-header">
+        <div class="tool-header-left">
+          <span class="tool-num">01</span>
+          <div><h3>Red-Rated Programme Turnaround</h3><p class="tagline">Programme Director, TATA Consultancy Services (client: PLANET Payments)</p></div>
+        </div>
+        <div class="badges"><span class="badge">£100m+ Programme</span><span class="badge">Programme Recovery</span><span class="badge">Multi-Site Migration</span></div>
+      </div>
+      <div class="tool-body">
+        <ul class="col-list">
+          <li>Inherited a red-rated £100m+ global Data Centre Transition programme for PLANET Payments, a PE-backed business, spanning 11 sites</li>
+          <li>Moved the programme from red to amber/green within approximately 90 days through structured re-mobilisation, governance reset and recovery planning, while maintaining payments-grade availability throughout</li>
+          <li>Rebuilt programme governance from the ground up, including new PMO controls, standardised executive reporting and Steering Committee cadence, reopening a strained client relationship in the process</li>
+        </ul>
+        <div class="relevance-note"><strong>Relevance to SSIS:</strong> direct evidence of entering a difficult delivery environment and establishing control quickly, without waiting for ideal conditions.</div>
+      </div>
+    </div>
+
+    <div class="tool-case reveal">
+      <div class="tool-header">
+        <div class="tool-header-left">
+          <span class="tool-num">02</span>
+          <div><h3>£300m Multi-Country Transformation Mobilisation</h3><p class="tagline">Transition Programme Director, HCL Technologies (client: Airbus)</p></div>
+        </div>
+        <div class="badges"><span class="badge">£300m Programme</span><span class="badge">5 Countries</span><span class="badge">12 Workstreams</span></div>
+      </div>
+      <div class="tool-body">
+        <ul class="col-list">
+          <li>Mobilised and directed Airbus's £300m Transition &amp; Transformation programme across 5 countries, standing up programme structure, governance and stakeholder cadence within 30 days of arrival</li>
+          <li>Ran 12 concurrent workstreams and engaged 80+ key personnel across 3 business units, establishing a unified stakeholder map and governance cadence under EU Aerospace security and data-handling controls</li>
+          <li>Separately inherited another red-rated £100m Airbus programme and stabilised it to amber, trending green, within approximately 30 days, restoring executive confidence across the account</li>
+        </ul>
+        <div class="relevance-note"><strong>Relevance to SSIS:</strong> demonstrates scale, rapid governance establishment and turnaround capability across a large, multi-workstream, multi-stakeholder environment.</div>
+      </div>
+    </div>
+
+    <div class="tool-case reveal">
+      <div class="tool-header">
+        <div class="tool-header-left">
+          <span class="tool-num">03</span>
+          <div><h3>Global Application &amp; Supplier Transition</h3><p class="tagline">Transformation Programme Director, HCL Technologies (client: Thomson Reuters)</p></div>
+        </div>
+        <div class="badges"><span class="badge">30,000 Users</span><span class="badge">88 Countries</span><span class="badge">400 Applications</span></div>
+      </div>
+      <div class="tool-body">
+        <ul class="col-list">
+          <li>Directed a £150m Office 365 and Windows 10 transformation for Thomson Reuters, covering 30,000 users across 88 countries, delivered on time and on budget with zero business-day service loss</li>
+          <li>Took on management, packaging and transition of approximately 400 applications from incumbent suppliers, re-tooling them without service disruption</li>
+          <li>Matrix-managed global delivery teams and strategic suppliers, including Dell and Microsoft, across UK, Europe, US and India time zones, navigating multi-jurisdictional data-residency and security requirements</li>
+        </ul>
+        <div class="relevance-note"><strong>Relevance to SSIS:</strong> direct evidence of coordinating complex application and supplier transition at scale, the same discipline SSIS requires across its policy administration, investment administration and integration estate.</div>
+      </div>
+    </div>
+
+    <div class="tool-case reveal">
+      <div class="tool-header">
+        <div class="tool-header-left">
+          <span class="tool-num">04</span>
+          <div><h3>Financial Services Delivery Leadership</h3><p class="tagline">Programme &amp; Portfolio Director roles across Financial Services</p></div>
+        </div>
+        <div class="badges"><span class="badge">Regulated Environments</span><span class="badge">Multi-Vendor Portfolios</span></div>
+      </div>
+      <div class="tool-body">
+        <ul class="col-list">
+          <li>Led multi-year ServiceNow, SAP, Unstructured Data and GDPR transformation programmes at Deutsche Bank, partnering with PwC and Deloitte to meet FRB-NY, ECB and GDPR supervisory requirements ahead of regulatory deadlines</li>
+          <li>Supported a £200m portfolio pipeline across NatWest and other clients at Cognizant, leading both new-programme initiation and red-to-green turnaround across active engagements</li>
+          <li>Earlier Programme Manager / Senior Programme Manager roles at Barclays, Lloyds Banking Group, Credit Suisse and Royal Bank of Scotland, delivering transition, transformation and regulatory change programmes predominantly in FCA / PRA-regulated environments</li>
+        </ul>
+        <div class="relevance-note"><strong>Relevance to SSIS:</strong> sustained, senior-level Financial Services delivery experience across regulated, multi-vendor programmes, though this does not extend to pensions or SIPP platform experience specifically.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- LOGO TICKER -->
+<section class="logo-ticker-section">
+  <div class="container">
+    <div class="section-label reveal" style="text-align:center;">Companies &amp; Institutions</div>
+  </div>
+  <div class="ticker-wrap reveal">
+    <div class="ticker-track">
+      <div class="ticker-item logo-card"><img src="LOGO_AIRBUS.png" alt="Airbus" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Airbus</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_THOMSONREUTERS.png" alt="Thomson Reuters" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Thomson Reuters</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_PLANETPAYMENTS.png" alt="PLANET Payments" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">PLANET Payments</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_DEUTSCHEBANK.png" alt="Deutsche Bank" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Deutsche Bank</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_BARCLAYS.png" alt="Barclays" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Barclays</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_LLOYDS.png" alt="Lloyds Banking Group" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Lloyds Banking Group</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_NATWEST.png" alt="NatWest" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">NatWest</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_RBS.png" alt="RBS" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">RBS</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_CREDITSUISSE.png" alt="Credit Suisse" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Credit Suisse</span></div>
+      <!-- duplicate set for seamless loop -->
+      <div class="ticker-item logo-card"><img src="LOGO_AIRBUS.png" alt="Airbus" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Airbus</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_THOMSONREUTERS.png" alt="Thomson Reuters" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Thomson Reuters</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_PLANETPAYMENTS.png" alt="PLANET Payments" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">PLANET Payments</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_DEUTSCHEBANK.png" alt="Deutsche Bank" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Deutsche Bank</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_BARCLAYS.png" alt="Barclays" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Barclays</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_LLOYDS.png" alt="Lloyds Banking Group" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Lloyds Banking Group</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_NATWEST.png" alt="NatWest" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">NatWest</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_RBS.png" alt="RBS" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">RBS</span></div>
+      <div class="ticker-item logo-card"><img src="LOGO_CREDITSUISSE.png" alt="Credit Suisse" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="ticker-fallback">Credit Suisse</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- APPROACH TO SSIS -->
+<section id="approach">
+  <div class="container">
+    <div class="section-label reveal">Proposed Approach</div>
+    <h2 class="section-title reveal">How Gary would approach SSIS</h2>
+    <p class="section-sub reveal">Based on Gary's discussion of the SSIS environment. This reflects his proposed operating approach to the engagement, not prior delivery on this programme.</p>
+    <div class="approach-list">
+      <div class="approach-item reveal">
+        <span class="num">01</span>
+        <div><h3>Establish Control</h3><p>Within the first two to three weeks, stand up a single integrated milestone-level plan, a single RAID log across all vendors, a single action log, and a weekly delivery/OpCo board chaired with named, accountable vendor leads in the room.</p></div>
+      </div>
+      <div class="approach-item reveal">
+        <span class="num">02</span>
+        <div><h3>Protect the Critical Path</h3><p>Feed architecture a prioritised list of the decisions delivery genuinely cannot wait for, testing every intermediate decision against the target end-state. Treat any interface or workaround that makes migration materially harder as technical debt, taken on consciously with an owner and an agreed cost.</p></div>
+      </div>
+      <div class="approach-item reveal">
+        <span class="num">03</span>
+        <div><h3>Prove End-to-End Delivery</h3><p>Challenge individual workstream "green" status using dependency health, integration test evidence, and independent challenge from an assurance function outside the workstream leads. Protect testing from schedule compression through layered testing: component, integration, end-to-end business process, then full dress rehearsal.</p></div>
+      </div>
+      <div class="approach-item reveal">
+        <span class="num">04</span>
+        <div><h3>Drive Recovery</h3><p>Intervene early when milestones move, evaluating the plan against the evidence and using scope, sequencing, parallelisation, resourcing and timeline levers to recover delivery, rather than relying on optimistic reporting to make up lost time.</p></div>
+      </div>
+      <div class="approach-item reveal">
+        <span class="num">05</span>
+        <div><h3>Protect the Sponsor</h3><p>Own day-to-day IT delivery in full: the integrated plan, dependencies, vendor performance, technical decisions within agreed architecture, risk management, operational readiness, cutover mechanics and go/no-go recommendation. Escalate only what changes sponsor commitments on scope, cost, timeline or regulatory position, or requires executive air-cover with Standard Life, Aegon or vendor leadership.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- CAPABILITY STRIP -->
+<section id="capabilities">
+  <div class="container">
+    <div class="section-label reveal">Capabilities</div>
+    <h2 class="section-title reveal">Core delivery capabilities</h2>
+    <div class="capability-strip">
+      <span class="capability-pill reveal">Technology Programme Leadership</span>
+      <span class="capability-pill reveal">Multi-Vendor Delivery</span>
+      <span class="capability-pill reveal">Programme Recovery</span>
+      <span class="capability-pill reveal">Migration &amp; Cutover</span>
+      <span class="capability-pill reveal">Integration Delivery</span>
+      <span class="capability-pill reveal">Data &amp; Environment Dependencies</span>
+      <span class="capability-pill reveal">Testing &amp; Operational Readiness</span>
+      <span class="capability-pill reveal">Governance &amp; Assurance</span>
+      <span class="capability-pill reveal">Financial Services Transformation</span>
+      <span class="capability-pill reveal">Executive Stakeholder Management</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- WHY -->
+<section id="why" class="why-section-tight">
+  <div class="container">
+    <div class="section-label reveal">Background</div>
+    <h2 class="section-title reveal">Why Gary is the right fit for the SSIS IT Delivery Lead mandate</h2>
+    <div class="why-grid">
+      <div class="why-card reveal"><h3>25+ years directing large-scale transformation</h3><p>Gary has directed £100m+ Transition &amp; Transformation programmes across Financial Services, Aviation, Payments, Public Sector and FTSE 250-listed corporations, with £300m+ single-programme authority and £1bn+ aggregate portfolio experience.</p></div>
+      <div class="why-card reveal"><h3>Proven programme turnaround capability</h3><p>Gary has repeatedly entered red-rated, high-risk delivery environments and established control quickly, moving programmes at PLANET Payments and Airbus from red to amber/green within 30 to 90 days through governance reset and recovery planning.</p></div>
+      <div class="why-card reveal"><h3>Genuine multi-vendor, multi-country delivery experience</h3><p>Gary has mobilised and run large programmes spanning multiple countries, business units and concurrent workstreams, matrix-managing global delivery teams and strategic suppliers across regulated, multi-jurisdictional environments.</p></div>
+      <div class="why-card reveal"><h3>Deep Financial Services credibility</h3><p>Gary's Financial Services experience spans Deutsche Bank, Barclays, Lloyds Banking Group, NatWest, RBS and Credit Suisse, giving him sustained credibility operating in FCA / PRA-regulated environments at executive level.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="container">
+    <div class="f-name">Gary Sangha</div>
+    <div class="f-links">
+      <a href="https://www.linkedin.com/in/garysangha/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="copyright">© 2026 Gary Sangha · Profile prepared by <a href="https://www.transformtogether.co.uk/" target="_blank" rel="noopener" class="footer-tt-link">Transform Together</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop">↑</button>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('visible'));
+  }
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 140) current = sec.getAttribute('id'); });
+    navLinks.forEach(l => { l.classList.toggle('active', l.getAttribute('href') === '#' + current); });
+
+    const btt = document.getElementById('backToTop');
+    if (window.scrollY > 400) btt.classList.add('show'); else btt.classList.remove('show');
+  });
+
+  // Hamburger
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('mobileDrawer');
+  const drawerClose = document.getElementById('drawerClose');
+  function openDrawer(){ drawer.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeDrawer(){ drawer.classList.remove('open'); document.body.style.overflow=''; }
+  hamburgerBtn.addEventListener('click', openDrawer);
+  drawerClose.addEventListener('click', closeDrawer);
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+  // Back to top
+  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+</script>
+</body>
+</html>
